@@ -172,6 +172,8 @@ class Document(BaseDocument):
                 # Get max document limit and max byte size from meta
                 max_size = cls._meta['max_size'] or 10000000  # 10MB default
                 max_documents = cls._meta['max_documents']
+                if max_size % 256:
+                    max_size = (max_size // 256 + 1) * 256
 
                 if collection_name in db.collection_names():
                     cls._collection = db[collection_name]
